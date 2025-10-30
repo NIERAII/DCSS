@@ -1,0 +1,447 @@
+@import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css");
+@import url('https://raw.githubusercontent.com/surgedevs/visual-refresh-compact-title-bar/refs/heads/main/desktop.css');
+@import url("https://aushevahmad.github.io/awesome-css/modules/custom-bar-prompt.css");
+@import url("https://blade04208.github.io/css/bettershiki.css");
+@import url("https://minidiscordthemes.github.io/Snippets/ForumImprovements/main.css");
+
+:root {
+    --prompt-text: "Unbelievable urge to shitpost? Don't hold back!"; /* replace --prompt-text with your desired text if you want */
+}
+
+/* YAPPING TYPING */
+.typingDots_b88801 > .ellipsis_b88801+.text_b88801 {
+  font-size: 0;
+  height: 16px;
+  >strong {
+    font-size: 12px;
+    &::after {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    &:last-child::after {
+      content: " is yapping...";
+    }
+    &:last-child:not(:first-child)::after {
+      content: " are yapping...";
+    }
+    &:nth-last-child(2)::after {
+      content: " and "
+    }
+    &:nth-last-child(3)::after {
+      content: ", ";
+    }
+  }
+  &:not(:has(>strong))::after {
+    font-size: 12px;
+    content: "Several people are yapping...";
+  }
+}
+
+/* REVERT USER AREA*/
+div[class^=sidebar_] section[class^=panels_] {
+  margin-left: var(--custom-guild-list-width);
+  width: calc(100% - var(--space-xs)* 2 - var(--custom-guild-list-width)) !important;
+}
+div[class^=sidebar_] nav[class^=wrapper_] {
+  margin-bottom: unset !important;
+}
+div[class^=sidebar_] .scroller__629e4, .scroller__99e7c  {
+  margin-bottom: unset !important;
+}
+
+/* User Area and Activity Panels redesign */
+/* #vc-spotify-player {
+    background-color: var(--background-gradient-highest, var(--background-base-low)) !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border: 1px solid var(--border-subtle);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    height: 130px;
+    margin-bottom: 12px;
+}
+
+section[class^="panels_"] {
+    background: var(--background-gradient-high, var(--background-base-lowest));
+    border: 0px;
+    border-left: 0px;
+}
+
+section[class^="panels_"] div[class^="container__"] {
+    background-color: var(--background-gradient-highest, var(--background-base-low));
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+}
+
+section[class^="panels_"] div[class^="panel_"] {
+    margin-bottom: 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-subtle);
+}
+
+header[class^="header_"] {
+    border-bottom: 0px;
+}
+
+section[class^="panels_"] div[class^="listeningAlong_"] {
+    border: 1px solid var(--border-subtle) !important;
+    margin-bottom: 12px;
+    border-radius: 20px;
+} */
+
+/* SETTINGS AS WINDOW */
+.standardSidebarView__23e6b {
+    position: absolute;
+    width: 60vw;
+    max-width: 60vw !important;
+    height: 80vh;
+    z-index: 3;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    border: rgba(255, 255, 255, 0.1) 1px solid;
+
+    .contentRegion__23e6b {
+        width: calc(60vw - 270px);
+        display: block;
+        flex: none;
+
+        .toolsContainer__23e6b {
+            margin: 0;
+            position: absolute;
+            right: 0px;
+            top: 0;
+            flex: none;
+            background-color: var(--background-primary);
+            padding: 0px;
+            height: 46px;
+            width: 100%;
+            box-shadow: var(--elevation-low);
+
+            .tools__23e6b {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                z-index: 5000;
+
+                .container_c2b141 {
+                    .keybind_c2b141 {
+                        display: none;
+                    }
+
+                    .closeButton_c2b141 {
+                        border-radius: 50%;
+                        background-color:rgba(255, 255, 255, 0.1);
+                        color: white;
+                        height: 25px !important;
+                        width: 25px !important;
+                        border: none;
+                        flex: none;
+
+                        >svg {
+                            margin: 9px 0px 0px 9px;
+                            width: 18px !important;
+                            height: 18px !important;
+                            overflow: visible;
+
+                            >path {
+                                margin-left: 20px;
+                                d: path("M0.00380648 0.00268555H1.50315H1.55C1.93069 0.0202563 2.31724 0.19596 2.5808 0.47123L6.00117 3.8916L9.4684 0.47123C9.86666 0.125678 10.1361 0.0143984 10.4992 0.00268555H11.9985V1.50203C11.9985 1.92957 11.9458 2.32784 11.6237 2.62653L8.20333 6.0469L11.5768 9.42042C11.858 9.70155 11.9985 10.0998 11.9985 10.4981V11.9974H10.4992C10.1009 11.9974 9.70267 11.8569 9.42154 11.5757L6.00117 8.15535L2.5808 11.5757C2.29967 11.8569 1.90141 11.9974 1.50315 11.9974H0.00380648V10.4981C0.00380648 10.0998 0.14437 9.70155 0.425496 9.42042L3.84587 6.0469L0.425496 2.62653C0.109228 2.33369 -0.0313351 1.92372 0.00380648 1.50203V0.00268555Z");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .contentColumn__23e6b:not([id*="vencord"], [id*="vesktop"]) {
+            /* vencord tabs excluded because they are literally the only ones that break lmfao */
+            min-width: 0px !important;
+            width: 100%;
+            padding: 0px 20px;
+
+            >.settingsPage_f131e9 {
+                >div {
+                    padding-top: 66px;
+                }
+
+                >h3 {
+                    font-size: 16px;
+                    z-index: 5000;
+                    height: 46px;
+                    align-content: center;
+                    text-align: center;
+                    width: calc(60vw - 270px - 50px);
+                    position: fixed;
+                }
+            }
+
+            >div>h2[data-text-variant="heading-lg/semibold"],
+            >div>.sectionTitle__7bffb>h2,
+            >h2[data-text-variant="heading-lg/semibold"] {
+                font-size: 16px;
+                z-index: 100;
+                height: 46px;
+                align-content: center;
+                text-align: center;
+                width: calc(60vw - 270px - 50px);
+                position: fixed;
+                pointer-events: none;
+            }
+
+            >div>.children__7bffb,
+            .tabBar_d6f9e9,
+            .vc-settings-tab-bar,
+            .vc-special-card,
+            >div>.h5_b717a1 {
+                margin-top: 66px;
+            }
+
+            .headerContainer__6a750 {
+                justify-content: center;
+            }
+        }
+    }
+
+    .sidebarRegion__23e6b {
+        flex: none;
+
+        .sidebar__23e6b {
+            width: 270px;
+            padding: 0;
+            overflow: visible !important;
+
+            &::before {
+                content: "Settings";
+                font-size: 16px;
+                font-weight: 600;
+                z-index: 100;
+                height: 46px;
+                align-content: center;
+                text-align: center;
+                width: 278px;
+                position: fixed;
+                pointer-events: none;
+                background-color: var(--background-secondary);
+                box-shadow: var(--elevation-low);
+                color: white;
+            }
+
+            .side_b3f026 {
+                overflow: visible !important;
+                padding: 60px 8px 60px 16px;
+            }
+        }
+    }
+
+}
+
+.layer__960e4 {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.baseLayer__960e4 {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+/* SHIGGY LOADER */
+.content_a2f514 {
+    display: flex;
+    flex-direction: column;
+    > .spinner_a2f514 { display: none }
+    &:before {
+        display: block;
+        height: 128px;
+        position: relative;
+        content: url(https://cdn.discordapp.com/emojis/1320593910631895134.gif?size=48&animated=true&name=Izuna);
+        image-rendering: pixelated;
+         align-content: center;
+         scale: 3.125;
+         margin-bottom: 96px;
+    }
+}
+
+/* CHANNEL HOWER ANIMATION */
+:root {
+    --list-item-transition: 0.2s ease;
+}
+.wrapper__2ea32 .link__2ea32 {
+    transition: margin-left var(--list-item-transition);
+}
+.wrapper__2ea32:hover .link__2ea32 {
+    margin-left: 10px;
+}
+.unread__2ea32 {
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    transition: var(--list-item-transition);
+}
+.wrapper__2ea32:hover .unread__2ea32 {
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: 3px;
+    background-color: transparent;
+    background: url('https://cdn.discordapp.com/emojis/1026533070955872337.webp?size=48');
+    background-size: 12px;
+    background-position: center;
+}
+
+/* COLORED ROLE PILLS  */
+.role_dfa8b6.pill_dfa8b6 {
+    position: relative;
+    background: none;
+    border: none;
+    padding-left: 28px;
+}
+
+.role_dfa8b6.pill_dfa8b6 > span {
+    z-index: 1;
+}
+
+.role_dfa8b6.pill_dfa8b6 .roleRemoveButton_dfa8b6 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: 0 !important;
+}
+
+.role_dfa8b6.pill_dfa8b6 .roleCircle__4f569 {
+    margin: 6px 8px;
+}
+
+.role_dfa8b6.pill_dfa8b6 .roleCircle__4f569::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: inherit;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border-radius: var(--radius-xs);
+    filter: brightness(1.1);
+    opacity: 0.25;
+}
+
+/* USER AND CHAT BOX ALIGNER */
+/* .visual-refresh {
+    --custom-channel-textarea-text-area-height: 56px;
+    .form_f75fb0 {
+        margin: 0 8px 8px 8px;
+        padding: 0;
+        --chatbar-border-color: var(--border-faint);
+    }
+    .channelTextArea_f75fb0 {
+        margin: 0;
+        border-color: var(--chatbar-border-color);
+        transition: none;
+    }
+    .base_b88801 {
+        top: -24px;
+        left: 0;
+        right: 0;
+        background-color: var(--chat-background-default);
+        padding: 0 8px;
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        border: 1px solid var(--chatbar-border-color);
+        border-bottom: none;
+        transition: none;
+        box-sizing: border-box;
+    }
+    .stackedBars__74017,
+    .threadSuggestionBar__841c8 {
+        border-color: var(--chatbar-border-color) !important;
+    }
+    .form_f75fb0:has(.base_b88801) {
+        .channelTextArea_f75fb0 {
+            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+        }
+    }
+    .form_f75fb0:has(.channelTextArea__74017:focus-within) {
+        --chatbar-border-color: var(--border-subtle);
+    }
+    .scrollerSpacer__36d07 {
+        height: calc(24px + 8px);
+    }
+    .scroller__36d07::-webkit-scrollbar-track {
+        margin-bottom: calc(20px + 8px);
+    }
+    .bottomBar__0f481 {
+        margin-bottom: 24px;
+    }
+    .wrapper__44df5 {
+        margin: 0;
+        border-radius: var(--radius-sm);
+    }
+} */
+
+/* STATUS BASED ACTIVITY ICON */
+[class^=memberInner]:has(> div > [aria-label*="Online"]) [class^=subText] svg>path[fill="#40a258"] {
+    fill: #43b581;
+}
+
+[class^=memberInner]:has(> div > [aria-label*="Idle"]) [class^=subText] svg>path[fill="#40a258"] {
+    fill: #f0b232;
+}
+
+[class^=memberInner]:has(> div > [aria-label*="Do Not Disturb"]) [class^=subText] svg>path[fill="#40a258"] {
+    fill: #f23f43;
+}
+
+[class^=memberInner]:has(> div > [aria-label*=Streaming]) [class^=subText] svg>path[fill="#40a258"] {
+    fill: #643da7;
+}
+
+/* VISIBLE BANNER */
+/*     Visible Server Banner     */
+[class^="container_"]:not([class*="bannerVisible_"]) >
+[class^="animatedContainer_"] {
+  top: 3px;
+}
+[class*="animatedContainer_"] {
+  opacity: 1 !important;
+}
+[class*="headerContent_"] {
+  filter: drop-shadow(0 1px 1px var(--bg-backdrop));
+}
+/* AMOLEDCord fix */
+[class^="sidebar_"] header {
+  background-color: transparent !important;
+}
+
+/* REPLY TAGS ORDER FIX */
+[class^=botTagCompact], /* reorder tegs in replies */
+[class^=repliedTextPreview], /* reorder message in replies */
+[class^=repliedTextContentTrailingIcon] /* reorder icon that can come after the message in replies */
+{
+    order: 1 !important; /* default order is 0 so putting it to 1 put it after */
+}
+
+/* MUTE CHANNEL EMOJIS */
+[class*="modeMuted_"]:has([class^="icon_"]) [class^="name_"] {
+    color: var(--channel-icon);
+    opacity: 40%;
+}
+
+/* CHAT HOWER ANIMATION */
+[data-list-item-id*="message"],
+[class*="messageListItem"],
+[id*="message-"],
+li[class*="messageListItem"] {
+    position: relative;
+    border-radius: var(--wave-border-radius);
+    transition: all 0.3s ease;
+}
+[data-list-item-id*="message"]:hover,
+[class*="messageListItem"]:hover,
+li[class*="messageListItem"]:hover {
+    transform: translateX(6px);
+}
