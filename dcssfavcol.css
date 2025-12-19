@@ -1,15 +1,445 @@
-@import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css");
-@import url('https://raw.githubusercontent.com/surgedevs/visual-refresh-compact-title-bar/refs/heads/main/desktop.css');
-@import url("https://aushevahmad.github.io/awesome-css/modules/custom-bar-prompt.css");
-@import url("https://blade04208.github.io/css/bettershiki.css");
-@import url("https://minidiscordthemes.github.io/Snippets/ForumImprovements/main.css");
+/* @import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css"); */
+:root {
+    --guildbar-avatar-size: 48px;
+    --blob-scale: 48;
+
+    --guildbar-folder-size: var(--guildbar-avatar-size);
+    --folder-blob-scale: var(--blob-scale);
+
+    --custom-guild-list-padding: 12px;
+    --custom-guild-list-width: calc(
+        max(var(--guildbar-avatar-size), var(--guildbar-folder-size))
+        + var(--custom-guild-list-padding) * 2
+    );
+}
+
+nav[class*="-guilds"] {
+    /* Uncomment if you changed up your nameplate */
+    /* margin: 0;
+    [class*="sidebar_"]::after {
+        height: 0;
+    } */
+
+    defs>path {
+        /* #svg-mask-squircle */
+        d: path("M0 0.464C0 0.301585 0 0.220377 0.0316081 0.158343C0.0594114 0.103776 0.103776 0.0594114 0.158343 0.0316081C0.220377 0 0.301585 0 0.464 0H0.536C0.698415 0 0.779623 0 0.841657 0.0316081C0.896224 0.0594114 0.940589 0.103776 0.968392 0.158343C1 0.220377 1 0.301585 1 0.464V0.536C1 0.698415 1 0.779623 0.968392 0.841657C0.940589 0.896224 0.896224 0.940589 0.841657 0.968392C0.779623 1 0.698415 1 0.536 1H0.464C0.301585 1 0.220377 1 0.158343 0.968392C0.103776 0.940589 0.0594114 0.896224 0.0316081 0.841657C0 0.779623 0 0.698415 0 0.536V0.464Z");
+    }
+
+    defs, 
+    [class*="-blobContainer"],
+    [class*="-listItemWrapper"],
+    [class*="-wrapper"],
+    [class*="-tutorialContainer"] [class*="-wrapper"],
+    svg[class*="-placeholderMask"],
+    svg:not([class*="-placeholderMask"]) > foreignObject {
+        width: var(--guildbar-avatar-size) !important;
+        height: var(--guildbar-avatar-size) !important;
+    }
+
+    [class*="-dragInner"] {
+        width: 40px;
+        height: 40px;
+    }
+
+    [class*="-dragOver"] {
+        &[class*="-target"]::before {
+            width: 100%;
+            left: calc(var(--guildbar-avatar-size) / 4);
+        }
+
+        &[class*="-centerTarget"]::before {
+            top: calc(var(--guildbar-avatar-size) / 2 + 8px)
+        }
+    }
+
+    [class*="-childWrapper "]>svg {
+        width: calc(var(--guildbar-avatar-size) - 18px);
+        height: calc(var(--guildbar-avatar-size) - 18px);
+    }
+
+    [class*="-childWrapper"],
+    [class*="-childWrapper"] img,
+    img[class*="-icon"], [class*="-folderPreviewGuildIcon"], /* allat cause of -iconBadge */
+    [class*="-circleIconButton"] {
+        border-radius: 50% !important;
+        transition: border-radius 150ms linear;
+
+        [class*="-selected"] &, &[class*="-selected"] {
+            border-radius: 27% !important;
+        }
+    }
+
+    [class*="-shiftSVG"] {
+        top: 0px;
+        left: 0px;
+
+        foreignObject {
+            transform: translate(-4px, -4px);
+        }
+    }
+
+    mask {
+        --badge-offset: calc(var(--guildbar-avatar-size) - 40px);
+
+        &:not([class*="-folderHeader"] mask) {
+            use[href$="-lower_badge_masks"] {
+                translate: var(--badge-offset) var(--badge-offset);
+            }
+
+            use[href$="-upper_badge_masks"] {
+                translate: var(--badge-offset);
+            }
+        }
+
+        use[href$="-blob_mask"] {
+            scale: var(--blob-scale);
+        }
+    }
+
+    [class*="-folderPreviewWrapper"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        [class$="-folderPreview"] {
+            width: calc(var(--guildbar-folder-size) * (2/3) + var(--custom-folder-preview-gap));
+            height: calc(var(--guildbar-folder-size) * (2/3) + var(--custom-folder-preview-gap));
+        }
+    }
+
+    [class*="-iconSizeMini "] {
+        width: calc(var(--guildbar-folder-size) / 3);
+        height: calc(var(--guildbar-folder-size) / 3);
+
+        [class*="-acronym"] {
+            line-height: calc(var(--guildbar-folder-size) / 3);
+        }
+
+        &[style*="font-size: 12px;"] {
+            font-size: 10px !important;
+        }
+        &[style*="font-size: 10px;"] {
+            font-size: 7px !important;
+        }
+        &[style*="font-size: 8px;"] {
+            font-size: 6px !important;
+        }
+    }
+
+    [class*="-folderButton"] {
+        overflow: visible;
+    }
+
+    [class*="-folderHeader"] {
+        --guildbar-avatar-size: var(--guildbar-folder-size);
+    }
+    
+    [class*="-folderIcon"] {
+        svg {
+            width: 24px !important;
+            height: 24px !important;
+        }
+        
+        background-color: var(--bg-mod-subtle);
+    }
+    
+    #guild-list-unread-dms > div {
+        height: var(--guildbar-avatar-size) !important;
+    }
+
+    [class*="-isExpanded"] {
+        [class*="-folderGroupBackground"] {
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        [class*="-stack"] {
+            height: auto !important;
+        }
+    }
+
+    [id^="folder-items-"] {
+        --guildbar-avatar-size: var(--guildbar-folder-size);
+        --blob-scale: var(--folder-blob-scale);
+    }
+}
+/* @import url('https://raw.githubusercontent.com/surgedevs/visual-refresh-compact-title-bar/refs/heads/main/desktop.css'); */
+.visual-refresh {
+    --vr-header-snippet-top: 0px;
+    --vr-header-snippet-server-padding: 16px;
+    --vr-header-snippet-space: 230px;
+    --vr-header-snippet-button-padding: 0;
+    --vr-header-snippet-winbuttons: flex;
+
+    div.f75fb00fb7356cbe-chat:not(.f75fb00fb7356cbe-threadSidebarOpen),
+    main._133bf5eea8e33a34-container,
+    div._01ae244280823725-chatLayerWrapper {
+        & section._9293f6b2fc12398a-container {
+            padding-right: var(--vr-header-snippet-space);
+        }
+    }
+
+    div._8a7fc664acf53af6-headerBar._8a7fc664acf53af6-overlay {
+        padding-right: var(--vr-header-snippet-space);
+
+        & ._65d410cfafd026bc-tab,
+        & ._1ac1c54c56e5807c-searchBar {
+            -webkit-app-region: no-drag;
+        }
+    }
+
+    div.bfe55a0aaaf62375-videoControls div._495084e7a0006942-subtitleContainer {
+        padding-right: calc(var(--vr-header-snippet-space) - 20px);
+
+        & ._9293f6b2fc12398a-toolbar {
+            -webkit-app-region: no-drag;
+        }
+    }
+
+    div[class*='page__'] {
+        &:not(:has(> div.f75fb00fb7356cbe-chat)) {
+            anchor-name: --vr-header-snippet;
+        }
+
+        & > div.f75fb00fb7356cbe-chat {
+            anchor-name: --vr-header-snippet;
+        }
+    }
+
+    .c38106a3f0c3ca76-winButtons {
+        display: var(--vr-header-snippet-winbuttons);
+    }
+
+    div[class*='base_'] {
+        grid-template-rows: [top] 0 [titleBarEnd] min-content [noticeEnd] 1fr [contentEnd] min-content [end];
+
+        &:has(div.c38106a3f0c3ca76-bar > div.c38106a3f0c3ca76-trailing ._496769951eb140fe-updateIconForeground) {
+            & div.f75fb00fb7356cbe-chat,
+            & div.f75fb00fb7356cbe-subtitleContainer,
+            & main._133bf5eea8e33a34-container,
+            & div._01ae244280823725-chatLayerWrapper {
+                & section._9293f6b2fc12398a-container {
+                    padding-right: calc(var(--vr-header-snippet-space) + 50px);
+                }
+            }
+
+            & div.bfe55a0aaaf62375-videoControls .bfe55a0aaaf62375-topControls div._9293f6b2fc12398a-toolbar {
+                margin-right: calc(var(--vr-header-snippet-space) + 30px) !important;
+            }
+        }
+
+        & > div[class*='content__'] {
+            z-index: 0;
+        }
+
+        & > div.c38106a3f0c3ca76-bar {
+            position: absolute;
+            position-anchor: --vr-header-snippet;
+            top: var(--vr-header-snippet-top);
+            right: anchor(right);
+            width: anchor-size(width);
+            padding: 0 var(--vr-header-snippet-button-padding) 0 0;
+
+            & > .c38106a3f0c3ca76-title {
+                display: none;
+            }
+        }
+
+        &:has(> ._6e2b9359c6f84cfd-notice) {
+            & > div.c38106a3f0c3ca76-bar {
+                top: anchor(top);
+            }
+        }
+
+        & div.c38106a3f0c3ca76-trailing {
+            background: none;
+            border: none;
+            height: var(--custom-channel-header-height);
+        }
+
+        &:has(.f75fb00fb7356cbe-threadSidebarOpen.f75fb00fb7356cbe-threadSidebarFloating) > .c38106a3f0c3ca76-bar {
+            z-index: 0;
+        }
+    }
+
+    :not(:has(div[class*='page__'] > div.f75fb00fb7356cbe-chat)) div[class*='base_'] > div.c38106a3f0c3ca76-bar {
+        right: 0 !important;
+    }
+
+    ul[data-list-id="guildsnav"] > div.ef3116c2da186559-itemsContainer > div.dbd2630aec71879b-stack {
+        margin-top: var(--vr-header-snippet-server-padding);
+    }
+
+    section._8067953d83f4b8a8-headerBar,
+    section._0b56311ebc6682e2-header div._9293f6b2fc12398a-toolbar,
+    section.c791b281f2fedc32-header div._9293f6b2fc12398a-toolbar,
+    section.c791b281f2fedc32-header div._9293f6b2fc12398a-children,
+    :not(.bfe55a0aaaf62375-videoControls) div._6ec1a06139ec3b27-topic {
+        -webkit-app-region: no-drag;
+    }
+
+    ._6db1d32c47b6ad72-shop section.showToolbar__9293f {
+        padding-right: var(--vr-header-snippet-space);
+
+        ._8067953d83f4b8a8-balanceWidgetMenu {
+            margin-right: 0;
+        }
+    }
+
+    .div.bfe55a0aaaf62375-videoControls .bfe55a0aaaf62375-topControls {
+        z-index: -1;
+    }
+
+    ._656be05658eed04d-profileThemedContainer ._34940b51cd19b69f-topRow {
+        align-items: end;
+        padding-bottom: 0;
+
+        & ._34940b51cd19b69f-closeAction {
+            -webkit-app-region: no-drag;
+        }
+
+        & ._34940b51cd19b69f-memberNameContainer {
+            padding-bottom: 12px;
+        }
+    }
+}
+/* @import url("https://aushevahmad.github.io/awesome-css/modules/custom-bar-prompt.css"); */
+/* custom chat bar input text  */
+
+/* hide existing text */
+._1b31f471f0bb10ab-placeholder.ec4baf0360ff3578-slateTextArea.fontSize16Padding__74017 {
+    visibility: hidden;
+}
+
+/* add custom text */
+._1b31f471f0bb10ab-placeholder.ec4baf0360ff3578-slateTextArea.fontSize16Padding__74017::before {
+    visibility: visible;
+    content: var(--prompt-text); /* replace var() with your desired text (in quotes) */
+    
+    /* for example:
+    
+    content: "i like snow cones";
+    
+    */
+}
+/* @import url("https://blade04208.github.io/css/bettershiki.css"); */
+
+.vc-shiki-root {
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-xs);
+    background: color-mix(in srgb, var(--background-base-lowest), transparent 50%) !important;
+    color: var(--text-default) !important;
+}
+
+.vc-shiki-lang {
+    top: -26px;
+    right: 26px;
+    color: transparent;
+    position: absolute;
+    background: transparent;
+    padding: var(--space-xxs) var(--radius-xs);
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+
+    &:hover {
+        color: var(--text-default);
+        background: var(--background-base-low);
+        border-color: var(--border-subtle);
+    }
+}
+
+.vc-shiki-devicon {
+    position: absolute;
+    bottom: -24px;
+    left: 25%;
+}
+
+.vc-shiki-code,
+.vc-shiki-container {
+    overflow: visible !important;
+}
+
+.vc-shiki-table>.vc-shiki-table-row:first-of-type .vc-shiki-table-cell {
+    padding-right: 22px;
+}
+
+.vc-shiki-btns {
+    top: 6px;
+    right: 7px;
+    opacity: 1;
+    width: 24px;
+    height: 24px;
+}
+
+.vc-shiki-btn {
+    opacity: 1;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-xs) !important;
+    font-size: 0px;
+    background: transparent !important;
+    color: var(--brand-300) !important;
+
+    &::after {
+        position: relative;
+        top: -11px;
+        left: -3px;
+        content: "⎘";
+        font-size: 16px;
+    }
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-500), transparent 75%) !important;
+
+        &::before {
+            position: absolute;
+            top: -30px;
+            right: -6px;
+            content: "Copy";
+            font-size: 13px;
+            padding: var(--space-xxs) var(--radius-xs);
+            border-radius: var(--radius-sm);
+            color: var(--text-default);
+            background: var(--background-base-low);
+            border: 1px solid var(--border-subtle);
+        }
+    }
+
+    &:focus {
+        background: color-mix(in srgb, var(--brand-500), transparent 90%) !important;
+        color: var(--brand-500) !important;
+
+        &::after {
+            content: "⎗";
+        }
+
+        &::before {
+            position: absolute;
+            top: -30px;
+            right: -14px;
+            content: "Copied!";
+            font-size: 13px;
+            padding: var(--space-xxs) var(--radius-xs);
+            border-radius: var(--radius-sm);
+            color: var(--text-default);
+            background: var(--background-base-low);
+            border: 1px solid var(--border-subtle);
+        }
+    }
+}
+
+.c19a557985eb7793-messageContent, ._4d95d73152192cf9-textContainer {
+    overflow: visible!important;
+}
+/* @import url("https://minidiscordthemes.github.io/Snippets/ForumImprovements/main.css"); */
+.f369dba7416c67f0-tagsContainer{gap:16px;align-items:flex-start}.f369dba7416c67f0-tagsContainer .f369dba7416c67f0-divider{display:none}.f369dba7416c67f0-tagsContainer .f369dba7416c67f0-tagList{height:auto;max-height:32px;transition:max-height .2s ease}.f369dba7416c67f0-tagsContainer .f369dba7416c67f0-tagList:is(:hover,:has(.a2c9e80f6531ccc2-selected)){max-height:256px}.f369dba7416c67f0-tagsContainer .f369dba7416c67f0-tagList .f369dba7416c67f0-tagListInner{justify-content:center}.f369dba7416c67f0-tagsContainer .f369dba7416c67f0-tagsButton{position:static;margin-left:0}.f369dba7416c67f0-tagsButtonPlaceholder{display:none}.d9be463a3c35b91e-tagsContainer{align-items:flex-start}.d9be463a3c35b91e-tagsContainer .d9be463a3c35b91e-tagsIcon{height:24px}.d9be463a3c35b91e-tagsContainer .d9be463a3c35b91e-tagList{height:auto;max-height:24px;transition:max-height .2s ease}.d9be463a3c35b91e-tagsContainer .d9be463a3c35b91e-tagList:is(:hover,:has(.a2c9e80f6531ccc2-selected)){max-height:192px}.d9be463a3c35b91e-tagsContainer .d9be463a3c35b91e-tagsButton{position:static;margin-left:0}.d9be463a3c35b91e-tagsButtonPlaceholder{display:none}._36d072eab2b2e737-scrollerInner{overflow:unset}._36d072eab2b2e737-scrollerInner .ee23ac2acd215184-divider{display:none}._36d072eab2b2e737-scrollerInner ._34c2c51cfce1632e-container{box-shadow:var(--elevation-low);border-top-color:rgba(0,0,0,0)}._9443936bd3681b09-popout{height:calc(18px + var(--custom-forum-composer-attachments-attachment-size) + 24px)}._9443936bd3681b09-popout .aa605f19898fe32e-uploadContainer ._41ea06378162693a-imageSmall{border-radius:12px 12px 0 0}._9443936bd3681b09-popout .aa605f19898fe32e-uploadContainer ._41ea06378162693a-imageSmall ._299eb87491f4b6d1-spoilerContainer{border-radius:12px 12px 0 0}._9443936bd3681b09-popout .aa605f19898fe32e-uploadContainer .aa605f19898fe32e-actionBarContainer{top:unset;bottom:0}._9443936bd3681b09-popout .aa605f19898fe32e-uploadContainer .aa605f19898fe32e-actionBarContainer .aa605f19898fe32e-smallActionBar{transform:none;opacity:1}._9443936bd3681b09-popout .aa605f19898fe32e-uploadContainer .aa605f19898fe32e-actionBarContainer .aa605f19898fe32e-smallActionBar .f7ecaca5c80dbf3a-wrapper{border-radius:0 0 12px 12px}._41ea06378162693a-imageSmall._41ea06378162693a-icon{background-color:var(--background-primary);background-size:60%}._41ea06378162693a-imageSmall ._299eb87491f4b6d1-spoilerContainer{border-radius:12px}._41ea06378162693a-imageSmall ._299eb87491f4b6d1-spoilerContainer .spoilerWarning__54ab5{zoom:.7}.f369dba7416c67f0-mainCard:hover{transform:none}.f369dba7416c67f0-mainCard ._9a337c84ff86a914-imageCover{object-fit:contain;background:var(--background-secondary)}:is(._9a337c84ff86a914-mediaIconsRow,._9a337c84ff86a914-tagsRow){transition:opacity .2s}._9a337c84ff86a914-postBody:hover :is(._9a337c84ff86a914-mediaIconsRow,._9a337c84ff86a914-tagsRow){opacity:0}:is(._9a337c84ff86a914-mediaIconsRow,._9a337c84ff86a914-tagsRow) ._9a337c84ff86a914-mediaIcon{background-image:url("https://discord.com/assets/c5a74fc51ff67682b11a.svg");height:22px}:is(._9a337c84ff86a914-mediaIconsRow,._9a337c84ff86a914-tagsRow) ._9a337c84ff86a914-mediaIcon path{fill:rgba(0,0,0,0)}.faa96b2163f6a142-thumbnailContainer .af017ab847f75d02-loadingOverlay{display:flex;align-items:center;justify-content:center}.faa96b2163f6a142-thumbnailContainer ._0f481cbbd7530492-altText{position:absolute;z-index:-1}.d9be463a3c35b91e-previewForm{padding:0;margin:1px 12px 0 0;border:0;outline:2px solid var(--background-modifier-selected);border-radius:var(--radius-xs);width:calc(100% - 24px - 78px - 24px)}.d9be463a3c35b91e-previewForm .d9be463a3c35b91e-contentContainer{width:100%}.d9be463a3c35b91e-previewForm .d9be463a3c35b91e-previewModeIndicator{position:absolute;pointer-events:none;bottom:4px;right:4px}
 
 :root {
     --prompt-text: "Unbelievable urge to shitpost? Don't hold back!"; /* replace --prompt-text with your desired text if you want */
 }
 
 /* YAPPING TYPING */
-.typingDots_b88801 > .ellipsis_b88801+.text_b88801 {
+.b8880176888cc928-typingDots > .b8880176888cc928-ellipsis+.b8880176888cc928-text {
   font-size: 0;
   height: 16px;
   >strong {
@@ -38,16 +468,41 @@
 }
 
 /* REVERT USER AREA*/
-div[class^=sidebar_] section[class^=panels_] {
-  margin-left: var(--custom-guild-list-width);
-  width: calc(100% - var(--space-xs)* 2 - var(--custom-guild-list-width)) !important;
+.visual-refresh section._5e434347c823b592-panels {
+  left: calc(var(--custom-guild-list-width) + var(--space-xs));
+  width: calc(100% - var(--custom-guild-list-width) - var(--space-xs)*2);
+  box-sizing: border-box;
+
+  .e131a99484292a19-actionButtons button {
+    padding: 0;
+  }
+
+  /* GameActivityToggle Fix (delete if you don't use) */
+  /* ._37e49614b9f110a9-container {
+    padding: var(--space-xxs);
+    gap: var(--space-4);
+    >._37e49614b9f110a9-buttons {
+      gap: 0;
+    }
+    >._37e49614b9f110a9-avatarWrapper {
+      min-width: 32px !important;
+      >._37e49614b9f110a9-avatar {
+        scale: 0.9;
+      }
+    }
+  } */
 }
-div[class^=sidebar_] nav[class^=wrapper_] {
-  margin-bottom: unset !important;
+nav._5e434347c823b592-guilds {
+  margin-bottom: 0 !important;
 }
-div[class^=sidebar_] .scroller__629e4, .scroller__99e7c  {
-  margin-bottom: unset !important;
+._5e434347c823b592-sidebar:after {
+  display: none;
 }
+/* BetterFolders fix (delete if you don't use) */
+/* .vc-betterFolders-sidebar~section._5e434347c823b592-panels {
+  left: calc(var(--custom-guild-list-width)*2  + var(--space-xs));
+  width: calc(100% - var(--custom-guild-list-width)*2 - var(--space-xs)*2 ) !important;
+} */
 
 /* User Area and Activity Panels redesign */
 /* #vc-spotify-player {
@@ -90,7 +545,7 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 } */
 
 /* SETTINGS AS WINDOW */
-.standardSidebarView__23e6b {
+._23e6b439306f125a-standardSidebarView {
     position: absolute;
     width: 60vw;
     max-width: 60vw !important;
@@ -103,12 +558,12 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
     overflow: hidden;
     border: rgba(255, 255, 255, 0.1) 1px solid;
 
-    .contentRegion__23e6b {
+    ._23e6b439306f125a-contentRegion {
         width: calc(60vw - 270px);
         display: block;
         flex: none;
 
-        .toolsContainer__23e6b {
+        ._23e6b439306f125a-toolsContainer {
             margin: 0;
             position: absolute;
             right: 0px;
@@ -120,18 +575,18 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
             width: 100%;
             box-shadow: var(--elevation-low);
 
-            .tools__23e6b {
+            ._23e6b439306f125a-tools {
                 position: absolute;
                 top: 10px;
                 right: 20px;
                 z-index: 5000;
 
-                .container_c2b141 {
-                    .keybind_c2b141 {
+                .c2b141c0f80863fb-container {
+                    .c2b141c0f80863fb-keybind {
                         display: none;
                     }
 
-                    .closeButton_c2b141 {
+                    .c2b141c0f80863fb-closeButton {
                         border-radius: 50%;
                         background-color:rgba(255, 255, 255, 0.1);
                         color: white;
@@ -156,13 +611,13 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
             }
         }
 
-        .contentColumn__23e6b:not([id*="vencord"], [id*="vesktop"]) {
+        ._23e6b439306f125a-contentColumn:not([id*="vencord"], [id*="vesktop"]) {
             /* vencord tabs excluded because they are literally the only ones that break lmfao */
             min-width: 0px !important;
             width: 100%;
             padding: 0px 20px;
 
-            >.settingsPage_f131e9 {
+            >.f131e93f07e2fe18-settingsPage {
                 >div {
                     padding-top: 66px;
                 }
@@ -192,23 +647,23 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
             }
 
             >div>.children__7bffb,
-            .tabBar_d6f9e9,
+            .d6f9e90c3456ac40-tabBar,
             .vc-settings-tab-bar,
             .vc-special-card,
-            >div>.h5_b717a1 {
+            >div>.b717a15017b82443-h5 {
                 margin-top: 66px;
             }
 
-            .headerContainer__6a750 {
+            .bdedd943df1d89dd-headerContainer {
                 justify-content: center;
             }
         }
     }
 
-    .sidebarRegion__23e6b {
+    ._23e6b439306f125a-sidebarRegion {
         flex: none;
 
-        .sidebar__23e6b {
+        ._23e6b439306f125a-sidebar {
             width: 270px;
             padding: 0;
             overflow: visible !important;
@@ -229,7 +684,7 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
                 color: white;
             }
 
-            .side_b3f026 {
+            .aa8da23faa27393c-side {
                 overflow: visible !important;
                 padding: 60px 8px 60px 16px;
             }
@@ -238,20 +693,20 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 
 }
 
-.layer__960e4 {
+._960e4207cea8323e-layer {
     background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-.baseLayer__960e4 {
+._960e4207cea8323e-baseLayer {
     opacity: 1 !important;
     transform: scale(1) !important;
 }
 
 /* SHIGGY LOADER */
-.content_a2f514 {
+.a2f5142ba8328dfd-content {
     display: flex;
     flex-direction: column;
-    > .spinner_a2f514 { display: none }
+    > .a2f5142ba8328dfd-spinner { display: none }
     &:before {
         display: block;
         height: 128px;
@@ -268,20 +723,20 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 :root {
     --list-item-transition: 0.2s ease;
 }
-.wrapper__2ea32 .link__2ea32 {
+._2ea32c412048f708-wrapper ._2ea32c412048f708-link {
     transition: margin-left var(--list-item-transition);
 }
-.wrapper__2ea32:hover .link__2ea32 {
+._2ea32c412048f708-wrapper:hover ._2ea32c412048f708-link {
     margin-left: 10px;
 }
-.unread__2ea32 {
+._2ea32c412048f708-unread {
     border-radius: 50%;
     width: 8px;
     height: 8px;
     margin-left: -4px;
     transition: var(--list-item-transition);
 }
-.wrapper__2ea32:hover .unread__2ea32 {
+._2ea32c412048f708-wrapper:hover ._2ea32c412048f708-unread {
     width: 12px;
     height: 12px;
     margin-top: -6px;
@@ -293,18 +748,18 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 }
 
 /* COLORED ROLE PILLS  */
-.role_dfa8b6.pill_dfa8b6 {
+.dfa8b6b94cddb191-role.dfa8b6b94cddb191-pill {
     position: relative;
     background: none;
     border: none;
     padding-left: 28px;
 }
 
-.role_dfa8b6.pill_dfa8b6 > span {
+.dfa8b6b94cddb191-role.dfa8b6b94cddb191-pill > span {
     z-index: 1;
 }
 
-.role_dfa8b6.pill_dfa8b6 .roleRemoveButton_dfa8b6 {
+.dfa8b6b94cddb191-role.dfa8b6b94cddb191-pill .dfa8b6b94cddb191-roleRemoveButton {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -313,11 +768,11 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
     margin: 0 !important;
 }
 
-.role_dfa8b6.pill_dfa8b6 .roleCircle__4f569 {
+.dfa8b6b94cddb191-role.dfa8b6b94cddb191-pill ._4f569b8941af22d1-roleCircle {
     margin: 6px 8px;
 }
 
-.role_dfa8b6.pill_dfa8b6 .roleCircle__4f569::before {
+.dfa8b6b94cddb191-role.dfa8b6b94cddb191-pill ._4f569b8941af22d1-roleCircle::before {
     content: '';
     display: block;
     position: absolute;
@@ -334,17 +789,17 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 /* USER AND CHAT BOX ALIGNER */
 /* .visual-refresh {
     --custom-channel-textarea-text-area-height: 56px;
-    .form_f75fb0 {
+    .f75fb00fb7356cbe-form {
         margin: 0 8px 8px 8px;
         padding: 0;
         --chatbar-border-color: var(--border-faint);
     }
-    .channelTextArea_f75fb0 {
+    .f75fb00fb7356cbe-channelTextArea {
         margin: 0;
         border-color: var(--chatbar-border-color);
         transition: none;
     }
-    .base_b88801 {
+    .b8880176888cc928-base {
         top: -24px;
         left: 0;
         right: 0;
@@ -356,28 +811,28 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
         transition: none;
         box-sizing: border-box;
     }
-    .stackedBars__74017,
-    .threadSuggestionBar__841c8 {
+    ._740174f3d6a2c8fe-stackedBars,
+    ._841c8f861f7b2704-threadSuggestionBar {
         border-color: var(--chatbar-border-color) !important;
     }
-    .form_f75fb0:has(.base_b88801) {
-        .channelTextArea_f75fb0 {
+    .f75fb00fb7356cbe-form:has(.b8880176888cc928-base) {
+        .f75fb00fb7356cbe-channelTextArea {
             border-radius: 0 0 var(--radius-sm) var(--radius-sm);
         }
     }
-    .form_f75fb0:has(.channelTextArea__74017:focus-within) {
+    .f75fb00fb7356cbe-form:has(._740174f3d6a2c8fe-channelTextArea:focus-within) {
         --chatbar-border-color: var(--border-subtle);
     }
-    .scrollerSpacer__36d07 {
+    ._36d072eab2b2e737-scrollerSpacer {
         height: calc(24px + 8px);
     }
-    .scroller__36d07::-webkit-scrollbar-track {
+    ._36d072eab2b2e737-scroller::-webkit-scrollbar-track {
         margin-bottom: calc(20px + 8px);
     }
-    .bottomBar__0f481 {
+    ._0f481cbbd7530492-bottomBar {
         margin-bottom: 24px;
     }
-    .wrapper__44df5 {
+    ._44df51b030bd5ece-wrapper {
         margin: 0;
         border-radius: var(--radius-sm);
     }
