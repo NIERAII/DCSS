@@ -11,6 +11,10 @@
         max(var(--guildbar-avatar-size), var(--guildbar-folder-size))
         + var(--custom-guild-list-padding) * 2
     );
+    --pill-roundness: 16px;
+    --pill-opacity: 30%;
+    --pill-border: false; /* "true" to enable */
+    --prompt-text: "Unbelievable urge to shitpost? Don't hold back!"
 }
 
 nav[class*="guilds_"] {
@@ -320,6 +324,7 @@ nav[class*="guilds_"] {
     
     */
 }
+
 /* @import url("https://blade04208.github.io/css/bettershiki.css"); */
 
 .vc-shiki-root {
@@ -431,10 +436,6 @@ nav[class*="guilds_"] {
 }
 /* @import url("https://minidiscordthemes.github.io/Snippets/ForumImprovements/main.css"); */
 .tagsContainer_f369db{gap:16px;align-items:flex-start}.tagsContainer_f369db .divider_f369db{display:none}.tagsContainer_f369db .tagList_f369db{height:auto;max-height:32px;transition:max-height .2s ease}.tagsContainer_f369db .tagList_f369db:is(:hover,:has(.selected_a2c9e8)){max-height:256px}.tagsContainer_f369db .tagList_f369db .tagListInner_f369db{justify-content:center}.tagsContainer_f369db .tagsButton_f369db{position:static;margin-left:0}.tagsButtonPlaceholder_f369db{display:none}.tagsContainer_d9be46{align-items:flex-start}.tagsContainer_d9be46 .tagsIcon_d9be46{height:24px}.tagsContainer_d9be46 .tagList_d9be46{height:auto;max-height:24px;transition:max-height .2s ease}.tagsContainer_d9be46 .tagList_d9be46:is(:hover,:has(.selected_a2c9e8)){max-height:192px}.tagsContainer_d9be46 .tagsButton_d9be46{position:static;margin-left:0}.tagsButtonPlaceholder_d9be46{display:none}.scrollerInner__36d07{overflow:unset}.scrollerInner__36d07 .divider_ee23ac{display:none}.scrollerInner__36d07 .container__34c2c{box-shadow:var(--elevation-low);border-top-color:rgba(0,0,0,0)}.popout__94439{height:calc(18px + var(--custom-forum-composer-attachments-attachment-size) + 24px)}.popout__94439 .uploadContainer_aa605f .imageSmall__41ea0{border-radius:12px 12px 0 0}.popout__94439 .uploadContainer_aa605f .imageSmall__41ea0 .spoilerContainer__299eb{border-radius:12px 12px 0 0}.popout__94439 .uploadContainer_aa605f .actionBarContainer_aa605f{top:unset;bottom:0}.popout__94439 .uploadContainer_aa605f .actionBarContainer_aa605f .smallActionBar_aa605f{transform:none;opacity:1}.popout__94439 .uploadContainer_aa605f .actionBarContainer_aa605f .smallActionBar_aa605f .wrapper_f7ecac{border-radius:0 0 12px 12px}.imageSmall__41ea0.icon__41ea0{background-color:var(--background-primary);background-size:60%}.imageSmall__41ea0 .spoilerContainer__299eb{border-radius:12px}.imageSmall__41ea0 .spoilerContainer__299eb .spoilerWarning__54ab5{zoom:.7}.mainCard_f369db:hover{transform:none}.mainCard_f369db .imageCover__9a337{object-fit:contain;background:var(--background-secondary)}:is(.mediaIconsRow__9a337,.tagsRow__9a337){transition:opacity .2s}.postBody__9a337:hover :is(.mediaIconsRow__9a337,.tagsRow__9a337){opacity:0}:is(.mediaIconsRow__9a337,.tagsRow__9a337) .mediaIcon__9a337{background-image:url("https://discord.com/assets/c5a74fc51ff67682b11a.svg");height:22px}:is(.mediaIconsRow__9a337,.tagsRow__9a337) .mediaIcon__9a337 path{fill:rgba(0,0,0,0)}.thumbnailContainer_faa96b .loadingOverlay_af017a{display:flex;align-items:center;justify-content:center}.thumbnailContainer_faa96b .altText__0f481{position:absolute;z-index:-1}.previewForm_d9be46{padding:0;margin:1px 12px 0 0;border:0;outline:2px solid var(--background-modifier-selected);border-radius:var(--radius-xs);width:calc(100% - 24px - 78px - 24px)}.previewForm_d9be46 .contentContainer_d9be46{width:100%}.previewForm_d9be46 .previewModeIndicator_d9be46{position:absolute;pointer-events:none;bottom:4px;right:4px}
-
-:root {
-    --prompt-text: "Unbelievable urge to shitpost? Don't hold back!"; /* replace --prompt-text with your desired text if you want */
-}
 
 /* YAPPING TYPING */
 .typingDots_b88801 > .ellipsis_b88801+.text_b88801 {
@@ -746,42 +747,92 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 }
 
 /* COLORED ROLE PILLS  */
-.role_dfa8b6.pill_dfa8b6 {
+
+.roleTag_af3987 > .role_af3987 {
     position: relative;
-    background: none;
-    border: none;
-    padding-left: 28px;
+    border-color: transparent;
+    .roleCircle__4f569::before {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+        border-radius: var(--pill-roundness);
+        background-color: inherit;
+        opacity: var(--pill-opacity);
+    }
+    @container style(--pill-border: true) {
+    .roleCircle__4f569::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid grey;
+        border-radius: var(--pill-roundness);
+        pointer-events: none;
+        mix-blend-mode: difference;
+        opacity: 0.3;
+    }
+    }
+    .twoColorGradient_e5de78::before,
+    .threeColorGradient_e5de78::before {
+        content: "";
+        background: inherit;
+        background-size: 50% 100%;
+        transition: background-position 0s;
+    }
+    .twoColorGradient_e5de78:hover::before,
+    .threeColorGradient_e5de78:hover::before {
+        animation: seamlessGradient 5s linear infinite;
+    }
+    .removeButton_af3987 {
+        position: relative;
+        left: -100%;
+        transform: translateX(21px);
+        margin-left: -14px;
+        opacity: 0;
+        color: grey;
+        mix-blend-mode: difference;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .roleName_af3987 {
+        z-index: 2;
+    }
+    .roleIcon_ee71ee {
+        position: relative;
+        display: flex;
+        width: 16px;
+        height: 16px;
+    }
 }
 
-.role_dfa8b6.pill_dfa8b6 > span {
-    z-index: 1;
+.outer_c0bea0 {
+    &.theme-light.images-light {
+        --button-bg: rgb(0 0 0 / 0.1);
+        --button-bg-hover: rgb(0 0 0 / 0.2);
+    }
+    &.theme-dark.images-dark {
+        --button-bg: rgb(255 255 255 / 0.1);
+        --button-bg-hover: rgba(255 255 255 / 0.2);
+    }
+    .pillButton_af3987,
+    .addButton_af3987,
+    .vc-permviewer-role-button {
+        border-color: transparent;
+        border-radius: var(--pill-roundness);
+        background-color: var(--button-bg);
+        &:hover {
+            background-color: var(--button-bg-hover);
+        }
+    }
 }
-
-.role_dfa8b6.pill_dfa8b6 .roleRemoveButton_dfa8b6 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    margin: 0 !important;
-}
-
-.role_dfa8b6.pill_dfa8b6 .roleCircle__4f569 {
-    margin: 6px 8px;
-}
-
-.role_dfa8b6.pill_dfa8b6 .roleCircle__4f569::before {
-    content: '';
-    display: block;
-    position: absolute;
-    background-color: inherit;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    border-radius: var(--radius-xs);
-    filter: brightness(1.1);
-    opacity: 0.25;
+@keyframes seamlessGradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
 }
 
 /* USER AND CHAT BOX ALIGNER */
