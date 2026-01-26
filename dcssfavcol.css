@@ -546,8 +546,8 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 /* SETTINGS AS WINDOW / MAKE SETTINGS A WINDOW*/
 .standardSidebarView__23e6b {
     position: absolute;
-    width: 80vw;
-    max-width: 80vw !important;
+    width: 65vw;
+    max-width: 65vw !important;
     height: 80vh;
     z-index: 3;
     justify-self: center;
@@ -558,7 +558,7 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
     border: rgba(255, 255, 255, 0.1) 1px solid;
     
     .contentRegion__23e6b {
-        width: calc(80vw - 270px);
+        width: calc(65vw - 270px);
         display: block;
         flex: none;
 
@@ -577,10 +577,9 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
 
             .tools__23e6b {
                 position: absolute;
-                top: 10px;
+                top: 40px;
                 right: 20px;
                 z-index: 5000;
-                padding-top: 3vh;
 
                 .container_c2b141 {
                     .keybind_c2b141 {
