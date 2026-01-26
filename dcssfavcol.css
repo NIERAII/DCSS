@@ -709,7 +709,7 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
     }
 }
 
-/* CHANNEL HOWER ANIMATION */
+/* CHANNEL HOVER ANIMATION */
 :root {
     --list-item-transition: 0.2s ease;
 }
@@ -926,7 +926,7 @@ section[class^="panels_"] div[class^="listeningAlong_"] {
     opacity: 40%;
 }
 
-/* CHAT HOWER ANIMATION */
+/* CHAT HOVER ANIMATION */
 [data-list-item-id*="message"],
 [class*="messageListItem"],
 [id*="message-"],
