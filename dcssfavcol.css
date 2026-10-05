@@ -17,7 +17,8 @@
     --pill-roundness: 16px;
     --pill-opacity: 30%;
     --pill-border: false; /* "true" to enable */
-    --prompt-text: "Unbelievable urge to shitpost? Don't hold back!"
+    --prompt-text: "Unbelievable urge to shitpost? Don't hold back!";
+    --jumpscare: true; 
 }
 /* @import url('https://raw.githubusercontent.com/surgedevs/visual-refresh-compact-title-bar/refs/heads/main/desktop.css'); */
 .visual-refresh {
@@ -806,7 +807,9 @@ li[class*="messageListItem"]:hover {
 }
 
 /* FOXY JUMPSCARE */
-body:has(.message__5126c[data-list-item-id$="0839"])::after {
+@container style(--jumpscare: true) {
+
+  body:has(.message__5126c[data-list-item-id$="0839"])::after {
     content: "get foxied";
     position: absolute;
     z-index: 200;
@@ -823,5 +826,6 @@ body:has(.message__5126c[data-list-item-id$="0839"])::after {
     @starting-style {
         opacity: 1;
     }
+  }
 
 }
